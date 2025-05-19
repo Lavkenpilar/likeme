@@ -3,7 +3,7 @@ import path from "node:path"
 import { fileURLToPath } from "node:url"
 import { writeFile, readFile } from "node:fs/promises"
 import cors from 'cors'
-import { consultaRegistro, nuevoRegistro } from './consultas.js'
+import { consultaRegistro, nuevoRegistro, modificarRegistroImg } from './consultas.js'
 
 
 const app = express()
@@ -43,7 +43,18 @@ app.post ("/registros", async (req, res)=>{
  } }
 )
 
+app.put ("/registros/:id", async (req, res)=>{
+    const { id } = req.params
+    const { img } = req.query
+    try {
+        await modificarRegistroImg (img, id)
+        res.send ("Imágen modificada con éxito")}
+        catch ({code, message}){
+            res.status(code).send (message)
+        }
+    }
+)
 
 app.listen (3000, ()=>{
-    console.log ('Servidor corriendo en el puerto 5000')
+    console.log ('Servidor corriendo en el puerto 3000')
 })
