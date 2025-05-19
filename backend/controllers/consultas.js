@@ -44,3 +44,9 @@ export const modificarRegistroImg = async (img, id)=>{
     }
 }*/
 
+export const eliminarRegistro = async (id)=>{
+    const consulta = "DELETE FROM posts WHERE id=$1"
+    const values = [id]
+    const result = await pool.query (consulta, values)
+    return result.rowCount
+}

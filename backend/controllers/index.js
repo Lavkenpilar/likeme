@@ -3,7 +3,7 @@ import path from "node:path"
 import { fileURLToPath } from "node:url"
 import { writeFile, readFile } from "node:fs/promises"
 import cors from 'cors'
-import { consultaRegistro, nuevoRegistro, modificarRegistroImg } from './consultas.js'
+import { consultaRegistro, nuevoRegistro, modificarRegistroImg, eliminarRegistro } from './consultas.js'
 
 
 const app = express()
@@ -54,6 +54,12 @@ app.put ("/registros/:id", async (req, res)=>{
         }
     }
 )
+
+app.delete ("/registros/:id", async (req, res)=>{
+    const { id } = req.params
+    await eliminarRegistro (id)
+    res.send ("Registro eliminado con éxito")
+})
 
 app.listen (3000, ()=>{
     console.log ('Servidor corriendo en el puerto 3000')
